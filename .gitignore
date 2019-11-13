@@ -1,0 +1,8 @@
+__pycache__
+*.pyc
+bin/
+lib/
+lib64
+pyvenv.cfg
+share/
+testdb.json*
