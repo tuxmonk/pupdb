@@ -2,12 +2,19 @@
     Basic tests for the PupDB database.
 """
 
+import logging
 import os
 import json
 
 import pytest
 
 from pupdb.core import PupDB
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(process)d | %(levelname)s | %(message)s'
+)
+
 
 TEST_DB_PATH = 'testdb.json'
 TEST_DB_LOCK_PATH = '{}.lock'.format(TEST_DB_PATH)
@@ -17,9 +24,9 @@ TEST_DB_LOCK_PATH = '{}.lock'.format(TEST_DB_PATH)
 def run_around_tests():
     """ Function is invoked around each test run. """
 
-    print('Test started.')
+    logging.debug('Test started.')
     yield
-    print('Test ended.')
+    logging.debug('Test ended.')
 
     if os.path.exists(TEST_DB_PATH):
         os.remove(TEST_DB_PATH)
