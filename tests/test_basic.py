@@ -129,3 +129,49 @@ def test_truncate_db():
     database.truncate_db()
 
     assert database.dumps() == json.dumps({})
+
+
+def test_length():
+    """
+        Tests whether len() on the PupDB instance returns it's proper length. 
+    """
+
+    database = PupDB(TEST_DB_PATH)
+    num_items = 100
+    range_list = list(range(num_items))
+    for i in range_list:
+        database.set(i, i)
+    assert len(database) == 100
+
+
+def test_get_database():
+    """
+        Tests whether _get_database() returns the dict for the DB.
+    """
+
+    database = PupDB(TEST_DB_PATH)
+    num_items = 100
+    range_list = list(range(num_items))
+    for i in range_list:
+        database.set(i, i)
+
+    # pylint: disable=protected-access
+    db_dict = database._get_database()
+    assert json.dumps({str(i): i for i in range_list}) == json.dumps(db_dict)
+
+
+def test_flush_database():
+    """
+        Tests whether _flush_database() writes to DB.
+    """
+
+    database = PupDB(TEST_DB_PATH)
+    num_items = 100
+    range_list = list(range(num_items))
+    data_dict = {str(i): i for i in range_list}
+
+    # pylint: disable=protected-access
+    database._flush_database(data_dict)
+    db_dict = database._get_database()
+
+    assert json.dumps(data_dict) == json.dumps(db_dict)
