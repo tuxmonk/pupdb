@@ -2,11 +2,17 @@
     Core module containing entrypoint functions for PupDB.
 """
 
+import logging
 import os
 import json
 import traceback
 
 from filelock import FileLock
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(process)d | %(levelname)s | %(message)s'
+)
 
 
 class PupDB:
@@ -15,10 +21,9 @@ class PupDB:
     def __init__(self, db_file_path):
         """ Initializes the PupDB database instance. """
 
-        self.db_lock_file_path = '{}.lock'.format(db_file_path)
         self.db_file_path = db_file_path
-
-        self.db_lock = FileLock(self.db_lock_file_path, timeout=10)
+        self.process_lock_path = '{}.lock'.format(db_file_path)
+        self.process_lock = FileLock(self.process_lock_path, timeout=-1)
         self.init_db()
 
     def __repr__(self):
@@ -34,7 +39,7 @@ class PupDB:
     def init_db(self):
         """ Initializes the database file. """
 
-        with self.db_lock:
+        with self.process_lock:
             if not os.path.exists(self.db_file_path):
                 with open(self.db_file_path, 'w') as db_file:
                     db_file.write(json.dumps({}))
@@ -43,9 +48,18 @@ class PupDB:
     def _get_database(self):
         """ Returns the database json object. """
 
-        with open(self.db_file_path, 'r') as db_file:
-            database = json.loads(db_file.read())
-            return database
+        with self.process_lock:
+            with open(self.db_file_path, 'r') as db_file:
+                database = json.loads(db_file.read())
+                return database
+
+    def _flush_database(self, database):
+        """ Flushes/Writes the database changes to disk. """
+
+        with self.process_lock:
+            with open(self.db_file_path, 'w') as db_file:
+                db_file.write(json.dumps(database))
+                return True
 
     def set(self, key, val):
         """
@@ -54,15 +68,12 @@ class PupDB:
         """
 
         try:
-            with self.db_lock, open(self.db_file_path, 'r+') as db_file:
-                database = json.loads(db_file.read())
-                database[key] = val
-                db_file.seek(0)
-                db_file.write(json.dumps(database))
-                db_file.truncate()
+            database = self._get_database()
+            database[key] = val
+            self._flush_database(database)
         except Exception:
-            print('Error while writing to DB: {}'.format(
-                traceback.format_exc()))
+            logging.error(
+                'Error while writing to DB: %s', traceback.format_exc())
             return False
         return True
 
@@ -83,19 +94,16 @@ class PupDB:
 
         try:
             key = str(key)
-            with self.db_lock, open(self.db_file_path, 'r+') as db_file:
-                database = json.loads(db_file.read())
-                if key not in database:
-                    raise ValueError(
-                        'Non-existent Key {} in database'.format(key)
-                    )
-                del database[key]
-                db_file.seek(0)
-                db_file.write(json.dumps(database))
-                db_file.truncate()
+            database = self._get_database()
+            if key not in database:
+                raise ValueError(
+                    'Non-existent Key {} in database'.format(key)
+                )
+            del database[key]
+            self._flush_database(database)
         except Exception:
-            print('Error while writing to DB: {}'.format(
-                traceback.format_exc()))
+            logging.error(
+                'Error while writing to DB: %s', traceback.format_exc())
             return False
         return True
 
@@ -129,7 +137,5 @@ class PupDB:
     def truncate_db(self):
         """ Truncates the entire database (makes it empty). """
 
-        with self.db_lock:
-            with open(self.db_file_path, 'w') as db_file:
-                db_file.write(json.dumps({}))
+        self._flush_database({})
         return True
