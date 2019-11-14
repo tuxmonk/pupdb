@@ -6,6 +6,7 @@
 import logging
 import os
 from threading import Thread
+import json
 
 import pytest
 
@@ -27,12 +28,15 @@ class PupDBWriterThread(Thread):
         to the database.
     """
 
-    def __init__(self, data_range):
+    def __init__(self, data_range, database=None):
         """ Instance Initialization """
 
         super(PupDBWriterThread, self).__init__()
         self.data_range = data_range
-        self.database = PupDB(TEST_DB_PATH)
+        if database is None:
+            self.database = PupDB(TEST_DB_PATH)
+        else:
+            self.database = database
 
     def run(self):
         """ Method performs write to the database."""
@@ -56,10 +60,11 @@ def run_around_tests():
         os.remove(TEST_DB_LOCK_PATH)
 
 
-def test_mt_get_and_set():
+def test_mt_get_and_set_mi():
     """
         Tests the get() and set() methods of PupDB,
-        in a multi-threaded scenario.
+        in a multi-threaded scenario, where each thread has it's own
+        instance (object) of PupDB.
     """
 
     data_ranges = [
@@ -82,3 +87,40 @@ def test_mt_get_and_set():
     # Verify if all keys have been written properly.
     database = PupDB(TEST_DB_PATH)
     assert len(database) == 200
+
+
+def test_mt_get_and_set_si():
+    """
+        Tests the get() and set() methods of PupDB,
+        in a multi-threaded scenario, where all threads share a
+        single instance (object) of PupDB.
+
+        PupDB currently does not support multiple threads using the same
+        PupDB instance, so the database file will get corrupted due to
+        race condition.
+
+        If you want to use PupDB with multiple threads, maintain separate
+        PupDB instance for each thread.
+    """
+
+    with pytest.raises(json.decoder.JSONDecodeError):
+        data_ranges = [
+            range(1, 50),
+            range(50, 100),
+            range(100, 150),
+            range(150, 201)
+        ]
+        writers = []
+        database = PupDB(TEST_DB_PATH)
+
+        # Write from multiple threads.
+        for data_range in data_ranges:
+            writer = PupDBWriterThread(data_range, database)
+            writers.append(writer)
+            writer.start()
+
+        for writer in writers:
+            writer.join()
+
+        # Verify if all keys have been written properly.
+        assert len(database) == 200
