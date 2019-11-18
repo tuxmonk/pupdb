@@ -61,6 +61,10 @@ def test_remove():
         else:
             assert database.get(i) is not None
 
+    # Check the behavaiour for a non-existent key.
+    with pytest.raises(KeyError):
+        database.remove(1000)
+
 
 def test_keys():
     """ Tests the keys() method of PupDB. """
