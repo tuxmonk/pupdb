@@ -92,14 +92,15 @@ class PupDB:
             Removes a key from the database.
         """
 
+        key = str(key)
+        database = self._get_database()
+        if key not in database:
+            raise KeyError(
+                'Non-existent Key {} in database'.format(key)
+            )
+        del database[key]
+
         try:
-            key = str(key)
-            database = self._get_database()
-            if key not in database:
-                raise ValueError(
-                    'Non-existent Key {} in database'.format(key)
-                )
-            del database[key]
             self._flush_database(database)
         except Exception:
             logging.error(
