@@ -6,15 +6,29 @@ import os
 import json
 import traceback
 
-from flask import Flask, request
+from flask import Flask, request, Response, jsonify
 
 from pupdb.core import PupDB
+
+
+# pylint: disable=too-many-ancestors
+class CustomResponse(Response):
+    """ Custom Response Class for the Flask Application. """
+
+    # pylint: disable=arguments-differ
+    @classmethod
+    def force_type(cls, rv, environ=None):
+        """ Overriden method to jsonify payload. """
+        if isinstance(rv, dict):
+            rv = jsonify(rv)
+        return super(CustomResponse, cls).force_type(rv, environ)
 
 
 def init_module():
     """ Initializes the Flask App. """
 
     app = Flask(__name__)
+    app.response_class = CustomResponse
     database = PupDB(os.environ.get('PUPDB_FILE_PATH') or 'pupdb.json')
     return app, database
 
