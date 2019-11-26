@@ -1,4 +1,4 @@
-<img src="logo.png" alt="PupDB Logo" width="400"/>
+<img src="https://raw.githubusercontent.com/tuxmonk/pupdb/master/logo.png" alt="PupDB Logo" width="400"/>
 
 [![Build Status](https://travis-ci.org/tuxmonk/pupdb.svg?branch=master)](https://travis-ci.org/tuxmonk/pupdb) [![codecov](https://codecov.io/gh/tuxmonk/pupdb/branch/master/graph/badge.svg)](https://codecov.io/gh/tuxmonk/pupdb)
 
@@ -56,4 +56,4 @@ see the
 ## License
 
 This project is licensed under the MIT License - see the
-[LICENSE.txt](LICENSE.txt) file for more details.
+[LICENSE.txt](https://github.com/tuxmonk/pupdb/blob/master/LICENSE.txt) file for more details.
