@@ -172,8 +172,8 @@ def test_db_items(test_client):
 
 
 # pylint: disable=redefined-outer-name
-def test_db_dumbs(test_client):
-    """ Test the HTTP db_dumbs() interface methods. """
+def test_db_dumps(test_client):
+    """ Test the HTTP db_dumps() interface methods. """
 
     # Before adding any data
     res = test_client.get('/dumps')
@@ -194,9 +194,11 @@ def test_db_dumbs(test_client):
     # After adding data
     res = test_client.get('/dumps')
     data = res.json
-    assert data['database'] == {
+    db_dict = {
         'test{}'.format(i): 'test{}'.format(i) for i in range(10)
     }
+    assert json.dumps(data['database'], sort_keys=True) == \
+        json.dumps(db_dict, sort_keys=True)
 
 
 # pylint: disable=redefined-outer-name

@@ -116,7 +116,7 @@ def test_dumps():
 
     db_dict = {str(i): i for i in range_list}
 
-    assert database.dumps() == json.dumps(db_dict)
+    assert database.dumps() == json.dumps(db_dict, sort_keys=True)
 
 
 def test_truncate_db():
@@ -128,7 +128,7 @@ def test_truncate_db():
         database.set(i, i)
 
     db_dict = {str(i): i for i in range_list}
-    assert database.dumps() == json.dumps(db_dict)
+    assert database.dumps() == json.dumps(db_dict, sort_keys=True)
 
     database.truncate_db()
 
@@ -161,7 +161,8 @@ def test_get_database():
 
     # pylint: disable=protected-access
     db_dict = database._get_database()
-    assert json.dumps({str(i): i for i in range_list}) == json.dumps(db_dict)
+    assert json.dumps({str(i): i for i in range_list}, sort_keys=True) == \
+        json.dumps(db_dict, sort_keys=True)
 
 
 def test_flush_database():
@@ -178,4 +179,5 @@ def test_flush_database():
     database._flush_database(data_dict)
     db_dict = database._get_database()
 
-    assert json.dumps(data_dict) == json.dumps(db_dict)
+    assert json.dumps(data_dict, sort_keys=True) == \
+        json.dumps(db_dict, sort_keys=True)
