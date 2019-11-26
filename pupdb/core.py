@@ -15,7 +15,8 @@ logging.basicConfig(
 )
 
 
-class PupDB:
+# pylint: disable=useless-object-inheritance
+class PupDB(object):
     """ This class represents the core of the PupDB database. """
 
     def __init__(self, db_file_path):
@@ -110,22 +111,24 @@ class PupDB:
 
     def keys(self):
         """
-            Returns an iterator of all the keys in the database.
+            Returns a list (py27) or iterator (py3) of all the keys
+            in the database.
         """
 
         return self._get_database().keys()
 
     def values(self):
         """
-            Returns an iterator of all the values in the database.
+            Returns a list (py27) or iterator (py3) of all the values
+            in the database.
         """
 
         return self._get_database().values()
 
     def items(self):
         """
-            Returns an iterator of all the items i.e. (key, val) pairs
-            in the database.
+            Returns a list (py27) or iterator (py3) of all the items i.e.
+            (key, val) pairs in the database.
         """
 
         return self._get_database().items()

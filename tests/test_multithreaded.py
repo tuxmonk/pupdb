@@ -7,6 +7,7 @@ import logging
 import os
 from threading import Thread
 import json
+import sys
 
 import pytest
 
@@ -103,7 +104,12 @@ def test_mt_get_and_set_si():
         PupDB instance for each thread.
     """
 
-    with pytest.raises(json.decoder.JSONDecodeError):
+    if sys.version_info[0] < 3:
+        error_cls = ValueError
+    else:
+        error_cls = json.decoder.JSONDecodeError
+
+    with pytest.raises(error_cls):
         data_ranges = [
             range(1, 50),
             range(50, 100),

@@ -41,9 +41,9 @@ pip install pupdb
 1. `set(key, value)`: Stores the `value` mapped to `key` in the database file.
 2. `get(key)`: Returns the `value` mapped to `key` in the database file. Returns `None` if `key` is not found.
 3. `remove(key)`: Removes the `key` from the database file. Raises a `KeyError` if `key` is not found in the database file.
-4. `keys()`: Returns a [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) of the keys present in the database file, similar to [`dict.keys()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.keys) in Python 3.
-5. `values()`: Returns a [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) of the values of all keys present in the database file, similar to [`dict.values()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.values) in Python 3.
-6. `items()`: Returns a [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) of the values of all keys present in the database file, similar to [`dict.items()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.items) in Python 3.
+4. `keys()`: Returns the keys present in the database file. Return type is `list` in Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.keys()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.keys)) in Python 3.
+5. `values()`: Returns the values of all keys present in the database file. Return type is `list` for Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.values()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.values)) in Python 3.
+6. `items()`: Returns the values of all keys present in the database file. Return type is `list` for Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.items()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.items)) in Python 3.
 7. `dumps()`: Returns a `json` dump of the entire database file.
 8. `truncate_db()`: Removes all data from the database file i.e. truncates the database file.
 

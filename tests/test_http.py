@@ -116,7 +116,7 @@ def test_db_keys(test_client):
     # After adding data
     res = test_client.get('/keys')
     data = res.json
-    assert data['keys'] == ['test{}'.format(i) for i in range(10)]
+    assert sorted(data['keys']) == ['test{}'.format(i) for i in range(10)]
 
 
 # pylint: disable=redefined-outer-name
@@ -142,7 +142,7 @@ def test_db_values(test_client):
     # After adding data
     res = test_client.get('/values')
     data = res.json
-    assert data['values'] == ['test{}'.format(i) for i in range(10)]
+    assert sorted(data['values']) == ['test{}'.format(i) for i in range(10)]
 
 
 # pylint: disable=redefined-outer-name
@@ -168,7 +168,7 @@ def test_db_items(test_client):
     # After adding data
     res = test_client.get('/items')
     data = res.json
-    assert data['items'] == [['test{}'.format(i)]*2 for i in range(10)]
+    assert sorted(data['items']) == [['test{}'.format(i)]*2 for i in range(10)]
 
 
 # pylint: disable=redefined-outer-name

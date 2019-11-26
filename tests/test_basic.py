@@ -76,7 +76,7 @@ def test_keys():
 
     db_keys_list = list(database.keys())
 
-    assert db_keys_list == range_list
+    assert sorted(db_keys_list) == range_list
 
 
 def test_values():
@@ -89,7 +89,7 @@ def test_values():
 
     db_values_list = list(database.values())
 
-    assert db_values_list == range_list
+    assert sorted(db_values_list) == range_list
 
 
 def test_items():
@@ -101,9 +101,9 @@ def test_items():
         database.set(i, i)
 
     items_list = [(str(i), i) for i in range_list]
-    db_values_list = list(database.items())
+    db_items_list = list(database.items())
 
-    assert db_values_list == items_list
+    assert sorted(db_items_list) == items_list
 
 
 def test_dumps():
