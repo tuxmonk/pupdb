@@ -1,5 +1,7 @@
 <img src="logo.png" alt="PupDB Logo" width="400"/>
 
+[![Build Status](https://travis-ci.org/tuxmonk/pupdb.svg?branch=master)](https://travis-ci.org/tuxmonk/pupdb)
+
 ## What is it?
 
 PupDB is an ernest attempt to create a simple file-based key-value database written in Python.
