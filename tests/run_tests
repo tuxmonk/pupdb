@@ -1,2 +1,3 @@
 #!/bin/sh
+cd tests/
 env PYTHONPATH=../ pytest -v --cov=pupdb --show-capture=no
