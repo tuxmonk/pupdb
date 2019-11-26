@@ -104,7 +104,8 @@ def test_mt_get_and_set_si():
         PupDB instance for each thread.
     """
 
-    if sys.version_info[0] < 3:
+    v_major, v_minor, _, _, _ = sys.version_info
+    if v_major < 3 or (v_major == 3 and v_minor <= 4):
         error_cls = ValueError
     else:
         error_cls = json.decoder.JSONDecodeError
