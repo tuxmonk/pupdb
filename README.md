@@ -44,7 +44,7 @@ pip install pupdb
 4. `keys()`: Returns the keys present in the database file. Return type is `list` in Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.keys()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.keys)) in Python 3.
 5. `values()`: Returns the values of all keys present in the database file. Return type is `list` for Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.values()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.values)) in Python 3.
 6. `items()`: Returns the values of all keys present in the database file. Return type is `list` for Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.items()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.items)) in Python 3.
-7. `dumps()`: Returns a `json` dump of the entire database file.
+7. `dumps()`: Returns a `json` dump of the entire database file sorted by key.
 8. `truncate_db()`: Removes all data from the database file i.e. truncates the database file.
 
 ## Versioning

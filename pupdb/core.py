@@ -134,9 +134,9 @@ class PupDB(object):
         return self._get_database().items()
 
     def dumps(self):
-        """ Returns a string dump of the entire database. """
+        """ Returns a string dump of the entire database sorted by key. """
 
-        return json.dumps(self._get_database())
+        return json.dumps(self._get_database(), sort_keys=True)
 
     def truncate_db(self):
         """ Truncates the entire database (makes it empty). """
