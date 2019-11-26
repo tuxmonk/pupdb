@@ -13,7 +13,7 @@ with open(
 setup(
     name='pupdb',
     packages=['pupdb'],
-    version='0.1.2',
+    version='0.1.3',
     license='MIT',
     description='A simple file-based key-value database written in Python.',
     long_description=LONG_DESCRIPTION,
