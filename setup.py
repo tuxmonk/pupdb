@@ -11,7 +11,7 @@ with open(path.join(path.abspath(path.dirname(__file__)), 'README.md')) as f:
 setup(
     name='pupdb',
     packages=['pupdb'],
-    version='0.1.3',
+    version='0.1.4',
     license='MIT',
     description='A simple file-based key-value database written in Python.',
     long_description=LONG_DESCRIPTION,
