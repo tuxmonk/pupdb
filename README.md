@@ -38,14 +38,64 @@ pip install pupdb
 
 ## Basic API Documentation and Usage
 
+PupDB can be instantiated as follows:
+```python
+from pupdb.core import PupDB
+
+# Specify database file path as an argument to the PupDB constructor. That's it.
+db = PupDB('db.json')
+```
+
 1. `set(key, value)`: Stores the `value` mapped to `key` in the database file.
+```python
+db.set('test_key', 'test_value')
+```
 2. `get(key)`: Returns the `value` mapped to `key` in the database file. Returns `None` if `key` is not found.
+```python
+db.get('test_key')
+```
 3. `remove(key)`: Removes the `key` from the database file. Raises a `KeyError` if `key` is not found in the database file.
+```python
+# Remove the key `test_key` from the db.
+db.remove('test_key')
+
+# Try doing the same again and it'll raise a `KeyError`,
+# as the key has already been deleted from the db in the above step.
+db.remove('test_key')
+```
 4. `keys()`: Returns the keys present in the database file. Return type is `list` in Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.keys()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.keys)) in Python 3.
+```python
+# Python 2
+print db.keys() # This will print ['key1', ...]
+
+# Python 3
+print(list(db.keys())) # This will print ['key1', ...]
+```
 5. `values()`: Returns the values of all keys present in the database file. Return type is `list` for Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.values()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.values)) in Python 3.
+```python
+# Python 2
+print db.values() # This will print ['value1', ...]
+
+# Python 3
+print(list(db.values())) # This will print ['value1', ...]
+```
 6. `items()`: Returns the values of all keys present in the database file. Return type is `list` for Python 2 and [Dictionary view object](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict-views) (similar to [`dict.items()`](https://docs.python.org/3.8/library/stdtypes.html?highlight=keys#dict.items)) in Python 3.
+```python
+# Python 2
+print db.items() # This will print [('key1', 'value1'), ...]
+
+# Python 3
+print(list(db.items())) # This will print [('key1', 'value1'), ...]
+```
 7. `dumps()`: Returns a `json` dump of the entire database file sorted by key.
+```python
+db.dumps() # This will print the database json string.
+```
 8. `truncate_db()`: Removes all data from the database file i.e. truncates the database file.
+```python
+db.truncate_db()
+print(db) # Will print an empty database dict '{}', as the database has been truncated.
+```
 
 ## Using the PupDB HTTP/REST Interface
 
