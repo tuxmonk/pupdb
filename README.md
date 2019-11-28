@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/tuxmonk/pupdb/master/logo.png" alt="PupDB Logo" width="400"/>
 
-[![Build Status](https://travis-ci.org/tuxmonk/pupdb.svg?branch=master)](https://travis-ci.org/tuxmonk/pupdb) [![codecov](https://codecov.io/gh/tuxmonk/pupdb/branch/master/graph/badge.svg)](https://codecov.io/gh/tuxmonk/pupdb) [![PyPI version fury.io](https://badge.fury.io/py/pupdb.svg)](https://pypi.python.org/pypi/pupdb/)
+[![Build Status](https://travis-ci.org/tuxmonk/pupdb.svg?branch=master)](https://travis-ci.org/tuxmonk/pupdb) [![codecov](https://codecov.io/gh/tuxmonk/pupdb/branch/master/graph/badge.svg)](https://codecov.io/gh/tuxmonk/pupdb) [![PyPI version fury.io](https://badge.fury.io/py/pupdb.svg)](https://pypi.python.org/pypi/pupdb/) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pupdb.svg)](https://pypi.python.org/pypi/pupdb/)
 
 ## What is it?
 
