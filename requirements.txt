@@ -3,5 +3,5 @@ Flask==1.0.4
 gunicorn==19.10.0
 pytest==4.6.6
 pytest-cov==2.8.1
-codecov==2.0.15
+codecov==2.0.16
 twine==1.15.0
