@@ -1,5 +1,5 @@
 filelock==3.0.12
-Flask==1.0.4
+Flask==2.3.2
 gunicorn==19.10.0
 pytest==4.6.6
 pytest-cov==2.8.1
